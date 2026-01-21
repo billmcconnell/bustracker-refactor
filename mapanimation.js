@@ -90,7 +90,13 @@ let marker = new mapboxgl.Marker()
 let counter = 0;
 function move() {
     setTimeout(() => {
-        if (counter >= busStops.length) return;
+        if (counter >= busStops.length) {
+            // Animation complete, refresh page after 3 seconds to allow viewing final stop
+            setTimeout(() => {
+                location.reload();
+            }, 3000);
+            return;
+        }
         marker.setLngLat(busStops[counter]);
         counter++;
         move();
