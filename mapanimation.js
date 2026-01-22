@@ -14,6 +14,22 @@ const busStops = [
     [-71.118625, 42.374863],
   ];
 
+// Bus stop names from MBTA Route 1 API data, matched to busStops coordinates
+const busStopNames = [
+    "84 Massachusetts Ave",
+    "Massachusetts Ave @ Albany St",
+    "Massachusetts Ave @ Albany St",
+    "Massachusetts Ave @ Sidney St",
+    "Massachusetts Ave @ Pearl St",
+    "Massachusetts Ave opp Inman St",
+    "Massachusetts Ave @ Bay St",
+    "Massachusetts Ave @ Bay St",
+    "Mt Auburn St @ Putnam Ave",
+    "Mt Auburn St @ DeWolfe St",
+    "Massachusetts Ave opp Holyoke St",
+    "Harvard Square"
+  ];
+
 // Mapbox access token goes here
 mapboxgl.accessToken = 'pk.eyJ1IjoiYmlsbG1jY29ubmVsbCIsImEiOiJjbGdsaWRqbG0wMTltM29yeWNlNTEzOWR6In0.djG2Y66PAlDICY6hEk-pww';
 
@@ -86,18 +102,27 @@ let marker = new mapboxgl.Marker()
 .setLngLat([-71.091542, 42.358862])
 .addTo(map);
 
+// Create stop name banner element for displaying current stop during animation
+const stopBanner = document.createElement('div');
+stopBanner.className = 'stop-name-banner';
+stopBanner.style.display = 'none';
+document.body.appendChild(stopBanner);
+
 // counter here represents the index of the current bus stop
 let counter = 0;
 function move() {
     setTimeout(() => {
         if (counter >= busStops.length) {
-            // Animation complete, refresh page after 3 seconds to allow viewing final stop
+            // Animation complete, hide banner and refresh page after 3 seconds
+            stopBanner.style.display = 'none';
             setTimeout(() => {
                 location.reload();
             }, 3000);
             return;
         }
         marker.setLngLat(busStops[counter]);
+        stopBanner.textContent = busStopNames[counter];
+        stopBanner.style.display = 'block';
         counter++;
         move();
     }, 1000);
