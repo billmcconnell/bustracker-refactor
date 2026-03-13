@@ -34,7 +34,7 @@ jobs:
         id: claude
         uses: anthropics/claude-code-action@v1
         with:
-          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_OAUTH_TOKEN }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODEOAUTH_TOKEN }}
 
           # Optional: Customize the trigger phrase (default: @claude)
           # trigger_phrase: "/claude"
